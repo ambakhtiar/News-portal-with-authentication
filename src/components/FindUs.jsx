@@ -1,7 +1,5 @@
 import { FaDiscord, FaFacebook } from "react-icons/fa";
 import { FaTwitch } from "react-icons/fa6";
-import { PiDiscordLogoBold } from "react-icons/pi";
-
 
 const FindUs = () => {
     return (
