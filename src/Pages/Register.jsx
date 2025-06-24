@@ -1,9 +1,9 @@
 import { useContext, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, Navigate, useNavigate } from "react-router-dom";
 import { AuthContext } from "../Provider/AuthProvider";
 
 const Register = () => {
-    const { createNewUser, setUser, updateUserProfile } = useContext(AuthContext);
+    const { createNewUser, userVerifyEmail, setUser, user, updateUserProfile } = useContext(AuthContext);
     const [error, setError] = useState({});
     const navigate = useNavigate();
 
@@ -30,20 +30,20 @@ const Register = () => {
             setError(prev => ({ ...prev, password: null }));
         }
 
-        console.log({ name, photo, email, password }, error.name, error.password);
+        // console.log({ name, photo, email, password }, error.name, error.password);
 
         if (hasError) return;
 
         createNewUser(email, password)
             .then(result => {
-                console.log(result.user);
+                // console.log(result.user);
                 setUser(result.user);
                 updateUserProfile({ displayName: name, photoURL: photo })
                     .then(() => {
                         navigate("/");
                     })
                     .catch(error => {
-                        console.log(error);
+                        // console.log(error);
                     });
 
             })
@@ -51,6 +51,10 @@ const Register = () => {
                 setError(prev => ({ ...prev, firebase: err.message }));
             });
 
+    }
+
+    const handleForgotPassword = () => {
+        navigate("/auth/forgot-password");
     }
 
     return (
@@ -91,9 +95,15 @@ const Register = () => {
                         </label>
                         <input name="password" type="password" placeholder="password" className="input input-bordered" required />
                         <label className="label">
-                            <a href="#" className="label-text-alt link link-hover">Forgot password?</a>
+                            <a onClick={handleForgotPassword} className="label-text-alt link link-hover">Forgot password?</a>
                         </label>
                     </div>
+                    {/* {
+                        user && (user?.emailVerified ? <Navigate to={"/"}></Navigate> :
+                            <label className="label font-bold">
+                                Please Verify your email.
+                            </label>)
+                    } */}
                     {
                         error.password ?
                             <label className="label text-red-500">

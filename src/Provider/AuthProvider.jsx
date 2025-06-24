@@ -1,9 +1,11 @@
 import { createContext, useEffect, useState } from "react";
-import { createUserWithEmailAndPassword, getAuth, onAuthStateChanged, signInWithEmailAndPassword, signOut, updateProfile } from "firebase/auth";
+import { createUserWithEmailAndPassword, getAuth, GithubAuthProvider, GoogleAuthProvider, onAuthStateChanged, sendEmailVerification, sendPasswordResetEmail, signInWithEmailAndPassword, signInWithPopup, signOut, updateProfile } from "firebase/auth";
 import app from "../firebase/firebase.config";
 
 export const AuthContext = createContext();
 const auth = getAuth(app);
+const googleProvider = new GoogleAuthProvider();
+const gitHubProvider = new GithubAuthProvider();
 
 const AuthProvider = ({ children }) => {
     const [user, setUser] = useState(null);
@@ -15,6 +17,10 @@ const AuthProvider = ({ children }) => {
         return createUserWithEmailAndPassword(auth, email, password);
     }
 
+    const userVerifyEmail = () => {
+        return sendEmailVerification(auth.currentUser);
+    }
+
     const userLogin = (email, password) => {
         setLoading(true);
         return signInWithEmailAndPassword(auth, email, password);
@@ -22,6 +28,18 @@ const AuthProvider = ({ children }) => {
 
     const updateUserProfile = (updatedData) => {
         return updateProfile(auth.currentUser, updatedData);
+    }
+
+    const userLogInWithGoogle = () => {
+        return signInWithPopup(auth, googleProvider);
+    }
+
+    const userLogInWithGitHub = () => {
+        return signInWithPopup(auth, gitHubProvider);
+    }
+
+    const passwordReset = (email) => {
+        return sendPasswordResetEmail(auth, email);
     }
 
     const logOut = () => {
@@ -33,6 +51,7 @@ const AuthProvider = ({ children }) => {
         const unsubscribe = onAuthStateChanged(auth, currentUser => {
             setUser(currentUser);
             setLoading(false);
+            console.log(currentUser);
         });
 
         return () => {
@@ -44,10 +63,14 @@ const AuthProvider = ({ children }) => {
         user,
         setUser,
         createNewUser,
+        userVerifyEmail,
         userLogin,
         updateUserProfile,
+        userLogInWithGoogle,
+        userLogInWithGitHub,
+        loading,
         logOut,
-        loading
+        passwordReset
     }
     return (
         <AuthContext.Provider value={authInfo}>

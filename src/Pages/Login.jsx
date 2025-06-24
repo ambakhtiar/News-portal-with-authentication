@@ -7,23 +7,27 @@ const Login = () => {
     const location = useLocation();
     const navigate = useNavigate();
     const [error, setError] = useState({});
-    console.log(location);
+    // console.log(location);
 
     const handleSubmit = (e) => {
         e.preventDefault();
         const email = e.target.email.value;
         const password = e.target.password.value;
-        console.log(email, password);
+        // console.log(email, password);
 
         userLogin(email, password)
             .then(result => {
-                console.log(result.user);
+                // console.log(result.user);
                 setUser(result.user);
                 navigate(location?.state ? location.state : "/");
             })
             .catch(err => {
                 setError({ ...error, login: err.code });
             });
+    }
+
+    const handleForgotPassword = () => {
+        navigate("/auth/forgot-password");
     }
 
     return (
@@ -48,7 +52,7 @@ const Login = () => {
                             </label>
                         }
                         <label className="label">
-                            <a href="#" className="label-text-alt link link-hover">Forgot password?</a>
+                            <a href="#" onClick={handleForgotPassword} className="label-text-alt link link-hover">Forgot password?</a>
                         </label>
                     </div>
                     <div className="form-control mt-6 ">
