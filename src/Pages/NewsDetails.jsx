@@ -14,8 +14,8 @@ const NewsDetails = () => {
 
             <main className="w-11/12 mx-auto grid grid-cols-12">
                 <section className="col-span-9">
-                    <h2 className="font-semibold">Dragon News</h2>
-                    <div className="card bg-base-100 w-96 shadow-xl">
+                    <h2 className="text-3xl font-semibold">Dragon News</h2>
+                    <div className="card bg-base-100">
                         <figure className="px-10 pt-10">
                             <img
                                 src={news.image_url}

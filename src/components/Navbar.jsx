@@ -26,13 +26,13 @@ const Navbar = () => {
             </div>
             <div className="login flex gap-2 items-center ml-2">
                 {
-                    user && user.displayName ?
+                    user && user?.displayName ?
                         <div className='flex items-center gap-2'>
-                            {user.emailVerified && <MdVerified className='text-green-600'></MdVerified>}
+                            {user?.emailVerified && <MdVerified className='text-green-600 text-xl'></MdVerified>}
                             <p className='text-lg lg:text-xl font-bold'>{user?.displayName}</p>
-                            {user.emailVerified ? <img className='w-10 h-10 rounded-full object-cover' src={user?.photoURL} alt="" /> :
+                            {user?.emailVerified ? <img className='w-10 h-10 rounded-full object-cover' src={user?.photoURL} alt="" /> :
                                 <div className="relative group">
-                                    <button onClick={handleSendVerificationEmail} className="btn p-1"><TbColumnRemove className='text-red-600 text-xl'></TbColumnRemove></button>
+                                    <button onClick={handleSendVerificationEmail} className="btn p-1 text-xl"><TbColumnRemove className='text-red-600 text-xl'></TbColumnRemove></button>
                                     {checkMsg ?
                                         <p className="absolute top-full left-0 mt-2 opacity-0 transition-opacity duration-300 group-hover:opacity-100 bg-gray-900 text-white px-2 py-1 rounded w-32">
                                             Please Check your email. Then Refresh.
