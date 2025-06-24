@@ -3,7 +3,7 @@
 #marqueee 
 #travel guru
 
-## news-portal-with-auth.firebaseapp.com
+## https://news-portal-with-auth.firebaseapp.com
 ## https://news-portal-with-auth.web.app/ 
 ## https://newsportal-bd.netlify.app/
 
